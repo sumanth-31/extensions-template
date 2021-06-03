@@ -22,3 +22,4 @@ function listenAndRespondBackgroundMessaged(): void {
 }
 
 listenAndRespondBackgroundMessaged();
+export {};
