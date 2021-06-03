@@ -2,14 +2,10 @@ import unique from 'unique-selector';
 import { getSelectors, addSelector } from './utils';
 console.log('this is content script');
 
-interface MessageWithResponse {
-    name: string;
-}
-
 let markedMode = 0;
 
 function addCSS() {
-    let styleElement = document.createElement('style');
+    const styleElement = document.createElement('style');
     styleElement.innerHTML = '.outline-yellow{outline: yellow dashed 5px} .outline-red{outline:red dashed 2px}';
     document.getElementsByTagName('head')[0].appendChild(styleElement);
 }
@@ -72,16 +68,6 @@ function listenToMessages(): void {
             if (markedMode === 1) markAllElements();
             else unMarkAllElements();
         }
-    });
-}
-
-function listenAndRespond() {
-    chrome.runtime.onMessage.addListener((message: MessageWithResponse, _sender, sendResponse) => {
-        console.log('Got message from CS');
-        setTimeout(() => {
-            sendResponse(`Hello, ${message.name}`);
-        }, 1000);
-        return true; // this indicates that we will send response asynchronously
     });
 }
 

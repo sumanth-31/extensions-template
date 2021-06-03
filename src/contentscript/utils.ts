@@ -2,7 +2,7 @@ interface ISaveElements {
     [key: string]: string[];
 }
 
-export function getSelectors() {
+export function getSelectors(): Promise<string[]> {
     return new Promise<string[]>(function (res) {
         const currentUrl = window.location.href;
         chrome.storage.sync.get(function (store) {
@@ -17,7 +17,7 @@ export function getSelectors() {
     });
 }
 
-export function addSelector(selector: string) {
+export function addSelector(selector: string): void {
     const currentUrl = window.location.href;
     chrome.storage.sync.get(function (store) {
         let savedElements: ISaveElements = {};
