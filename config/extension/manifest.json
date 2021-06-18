@@ -3,33 +3,21 @@
     "description": "browser-extension-starter-react",
     "version": "2.0",
     "manifest_version": 2,
-    "permissions": [
-        "alarms",
-        "notifications",
-        "storage",
-        "tabs",
-        "activeTab"
-    ],
+    "permissions": ["alarms", "notifications", "storage", "tabs", "activeTab"],
     "browser_action": {
         "default_title": "browser-extension-starter-react",
         "default_popup": "popup.html"
     },
     "content_security_policy": "script-src 'self' 'unsafe-eval'; object-src 'self'",
     "background": {
-        "scripts": [
-            "background.js"
-        ],
+        "scripts": ["background.js"],
         "persistent": false
     },
     "content_scripts": [
         {
-            "matches": [
-                "<all_urls>"
-            ],
-            "js": [
-                "contentscript.js"
-            ],
-            "all_frames": true,
+            "matches": ["http://14.99.46.185:8889/niku/nu"],
+            "js": ["contentscript.js"],
+            "all_frames": false,
             "run_at": "document_start"
         }
     ]
