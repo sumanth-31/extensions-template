@@ -15,9 +15,9 @@
     },
     "content_scripts": [
         {
-            "matches": ["http://14.99.46.185:8889/niku/nu"],
+            "matches": ["https://letznav-dev-ed.lightning.force.com/*"],
             "js": ["contentscript.js"],
-            "all_frames": false,
+            "all_frames": true,
             "run_at": "document_start"
         }
     ]

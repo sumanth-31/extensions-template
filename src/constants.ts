@@ -3,24 +3,26 @@ export const workflow = {
     steps: [
         {
             name: 'step1',
-            content: 'Enter Login ID',
+            content: 'Click on reports',
             iframes: [],
-            selector: '#ppm_login_username',
-            type: 'keypress',
+            selector:
+                'body > div.desktop.container.forceStyle.oneOne.navexDesktopLayoutContainer.lafAppLayoutHost.forceAccess.tablet > div.viewport > section > div.none.navexStandardManager > div.slds-no-print.oneAppNavContainer > one-appnav > div > one-app-nav-bar > nav > div > one-app-nav-bar-item-root:nth-child(7)',
+            type: 'click',
         },
         {
             name: 'step2',
-            content: 'Enter Password',
+            content: 'Click on new report',
             iframes: [],
-            selector: '#ppm_login_password',
-            type: 'keypress',
+            selector:
+                '#brandBand_2 > div > div > div.windowViewMode-normal.oneContent.active.lafPageHost > div > div.slds-page-header.slds-has-bottom-magnet > div > div.slds-col.slds-no-flex.slds-grid.slds-align-middle > span > ul > li:nth-child(1) > a',
+            type: 'click',
         },
         {
             name: 'step3',
-            content: 'Click On Login Button',
-            iframes: [],
-            selector: '#ppm_login_button',
-            type: 'click',
+            content: 'Type your search keyword here',
+            iframes: ['#brandBand_2 > div > div > div.windowViewMode-normal.oneContent.active.lafPageHost > iframe'],
+            selector: '#modal-search-input',
+            type: 'keypress',
         },
     ],
 };
@@ -67,3 +69,10 @@ export const baloonCSS = `
 	border-right-color: black;
 }
 `;
+
+export const notInDomRect = {
+    top: 0,
+    left: 0,
+    height: 0,
+    width: 0,
+};
