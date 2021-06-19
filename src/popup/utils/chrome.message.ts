@@ -1,27 +1,36 @@
-export function sendMessageToContentScript<T>(message: T): void {
-    chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
-        if (tabs?.[0]?.id) {
-            chrome.tabs.sendMessage(tabs[0].id, message);
+import { getListenerMap } from './listenerUtils';
+export class MessagingService {
+    private static messagingServiceInstance: MessagingService;
+
+    public static getInstance(): MessagingService {
+        if (!this.messagingServiceInstance) {
+            this.messagingServiceInstance = new MessagingService();
         }
-    });
-}
+        return this.messagingServiceInstance;
+    }
 
-export function sendMessageToContentScriptWithResponse<T, R>(message: T): Promise<R> {
-    return new Promise<R>((res) => {
-        chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
-            if (tabs?.[0]?.id) {
-                chrome.tabs.sendMessage(tabs[0].id, message, (response) => {
-                    return res(response);
-                });
-            }
-        });
-    });
-}
+    private listenerOn: boolean;
 
-export function sendChromeMessage<T, R>(message: T): Promise<R> {
-    return new Promise<R>((res) => {
-        chrome.runtime.sendMessage(message, (resp) => {
-            res(resp);
+    private constructor() {
+        this.listenerOn = false;
+    }
+
+    sendMessage(message: any): Promise<any> {
+        return new Promise(function (res) {
+            chrome.runtime.sendMessage(message, function (response) {
+                return res(response);
+            });
         });
-    });
+    }
+
+    startListening() {
+        if (this.listenerOn) return;
+        this.listenerOn = true;
+        const listenerMap = getListenerMap();
+        chrome.runtime.onMessage.addListener(function (message, sender, resp) {
+            const handler = listenerMap.get(message.type);
+            if (!handler) return;
+            handler(message, sender, resp);
+        });
+    }
 }

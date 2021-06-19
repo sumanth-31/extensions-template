@@ -1,24 +1,10 @@
-console.log('this is background script');
+import { MessagingService } from '../popup/utils/chrome.message';
 
-interface Message {
-    type: 'http';
+function listenToMessages() {
+    const messagingService = MessagingService.getInstance();
+    messagingService.startListening();
 }
 
-function httpRequest() {
-    return fetch('https://jsonplaceholder.typicode.com/todos');
-}
+listenToMessages();
 
-function listenAndRespondBackgroundMessaged(): void {
-    chrome.runtime.onMessage.addListener((message: Message, sender, sendResponse) => {
-        if (message.type === 'http') {
-            httpRequest().then((res) => {
-                res.json().then((data) => {
-                    sendResponse(data);
-                });
-            });
-        }
-        return true; // this indicates that we will send response asynchronously
-    });
-}
-
-listenAndRespondBackgroundMessaged();
+export {};
