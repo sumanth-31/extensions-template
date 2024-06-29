@@ -3,6 +3,9 @@
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
+  "engines": {
+    "node": "~14.15.1"
+  },
   "scripts": {
     "clean": "rimraf dist",
     "build-dev": "npm run clean && webpack --config ./config/webpack/webpack.dev.js",
